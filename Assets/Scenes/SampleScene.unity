@@ -133,6 +133,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SquarePatroller
       objectReference: {fileID: 0}
+    - target: {fileID: 199293595442730794, guid: 38a7e1e8001c1438485ebc8527d08487,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 199293595442730795, guid: 38a7e1e8001c1438485ebc8527d08487,
         type: 3}
       propertyPath: m_LocalPosition.x
