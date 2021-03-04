@@ -22,6 +22,9 @@ public class ActorRotator : ActorBase
         moveSpeed = 2.0f;
         isRunning = false;
 
+        maxSightDistance = 100;
+        viewAngle = 90;
+
         xCoefficients = new int[4] {1, 0, -1, 0};
         zCoefficients = new int[4] {0, 1, 0, -1};
 
@@ -43,7 +46,16 @@ public class ActorRotator : ActorBase
             transform.Translate(0, 0, moveSpeed * Time.deltaTime);
         }
 
-        processKeyboardInput();
+        if(PlayerInSight())
+        {
+            moveSpeed = 4.0f;
+        }
+        else
+        {
+            moveSpeed = 2.0f;
+        }
+
+        //processKeyboardInput();
     }
 
     IEnumerator RotateActor(Vector3 pAxis, float pAngle, float pDuration = 1.0f)
