@@ -11,28 +11,18 @@ public class ActorBackAndForth : ActorBase
 
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+        patrollingEnemyState.wayPoints = wayPoints;
         currentWayPointsIndex = 0;
         isRunning = false;
         moveSpeed = 2.0f;
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        if(wayPoints.Length > 1)
-        {
-            float step = moveSpeed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, wayPoints[currentWayPointsIndex].position, step);
-
-            //if it gets to the wayopint, move it to the next one
-            if(Vector3.Distance(transform.position, wayPoints[currentWayPointsIndex].position) < 0.05f)
-            {
-                currentWayPointsIndex = (currentWayPointsIndex + 1) % wayPoints.Length;
-            }
-        }
-
-        processKeyboardInput();
+        base.Update();
     }
 }

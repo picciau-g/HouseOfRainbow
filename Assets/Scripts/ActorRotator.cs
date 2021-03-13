@@ -31,7 +31,7 @@ public class ActorRotator : ActorBase
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         currentTime += Time.deltaTime;
 
@@ -46,16 +46,8 @@ public class ActorRotator : ActorBase
             transform.Translate(0, 0, moveSpeed * Time.deltaTime);
         }
 
-        if(PlayerInSight())
-        {
-            moveSpeed = 4.0f;
-        }
-        else
-        {
-            moveSpeed = 2.0f;
-        }
-
-        //processKeyboardInput();
+        //check if player in sight
+        base.Update();
     }
 
     IEnumerator RotateActor(Vector3 pAxis, float pAngle, float pDuration = 1.0f)

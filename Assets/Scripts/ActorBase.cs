@@ -10,20 +10,40 @@ public class ActorBase : MonoBehaviour
     protected int maxSightDistance;
     [SerializeField]
     protected double viewAngle;
+    [SerializeField]
+    protected EnemyStateMachine _mEnemySM;
 
-    // Start is called before the first frame update
-    void Start()
+    public PatrollingEnemyState patrollingEnemyState;
+    public ChasingEnemyState chasingEnemyState;
+    public AttackingEnemyState attackingEnemyState;
+
+
+    protected virtual void Start()
     {
-        moveSpeed = 2.0f;
-        isRunning = false;
+        _mEnemySM = new EnemyStateMachine();
+
+        //initialize States with new
+        patrollingEnemyState = new PatrollingEnemyState(this, _mEnemySM);
+        chasingEnemyState = new ChasingEnemyState(this, _mEnemySM);
+        attackingEnemyState = new AttackingEnemyState(this, _mEnemySM);
+
+        if (patrollingEnemyState == null)
+            Debug.Log("NULL ENEMY STATE");
+        else
+            Debug.Log("ALRIGHT, ENEMY NOT NULL");
+
+        //Initialize the Enemy state
+        _mEnemySM.Initialize(patrollingEnemyState);
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        processKeyboardInput();
+        _mEnemySM.CurrentState.Update();
+        _mEnemySM.CurrentState.LogicUpdate();
     }
 
+   
 
     protected void WalkToRun()
     {
@@ -33,35 +53,5 @@ public class ActorBase : MonoBehaviour
             moveSpeed = 4.0f;
         else
             moveSpeed = 2.0f;
-    }
-
-    protected void processKeyboardInput()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            WalkToRun();
-            print("Walk to Run");
-        }
-    }
-
-    protected bool PlayerInSight()
-    {
-        GameObject pObject = GameObject.FindGameObjectWithTag("Player");
-        if (pObject == null)
-            return false;
-
-        Vector3 distToPlayer = (pObject.transform.position - transform.position).normalized;
-        float angle = Vector3.Angle(transform.forward, distToPlayer);
-        
-        if (angle > viewAngle / 2)
-            return false;
-        LayerMask msk = LayerMask.GetMask("PlayerLayer");
-
-        if (Physics.Raycast(transform.position, distToPlayer, maxSightDistance, msk))
-        {
-            Debug.Log("Player in Sight!");
-            return true;
-        }
-        return false;
     }
 }
