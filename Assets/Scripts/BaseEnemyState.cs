@@ -29,20 +29,25 @@ public abstract class BaseEnemyState
     protected virtual bool CheckOnPlayer()
     {
         if (_playerToChase == null)
+        {
+            Debug.Log("NO PLAYER HERE");
             return false;
+        }
 
         Vector3 distToPlayer = (_playerToChase.transform.position - _mEnemyAssociated.transform.position).normalized;
         float angle = Vector3.Angle(_mEnemyAssociated.transform.forward, distToPlayer);
 
-        if (angle > 90 / 2)
+
+        if (angle > 45)
             return false;
+
         LayerMask msk = LayerMask.GetMask("PlayerLayer");
 
-        if (Physics.Raycast(_mEnemyAssociated.transform.position, distToPlayer, 100, msk))
+        if (Physics.Raycast(_mEnemyAssociated.transform.position, distToPlayer, 30, msk))
         {
-            Debug.Log("Player in Sight!");
             return true;
         }
+
         return false;
     }
 

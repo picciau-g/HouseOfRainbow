@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ActorBackAndForth : ActorBase
 {
-    [SerializeField]
-    Transform[] wayPoints;
 
     int currentWayPointsIndex;
 
@@ -14,7 +12,6 @@ public class ActorBackAndForth : ActorBase
     protected override void Start()
     {
         base.Start();
-        patrollingEnemyState.wayPoints = wayPoints;
         currentWayPointsIndex = 0;
         isRunning = false;
         moveSpeed = 2.0f;

@@ -12,10 +12,19 @@ public class ActorBase : MonoBehaviour
     protected double viewAngle;
     [SerializeField]
     protected EnemyStateMachine _mEnemySM;
+    [SerializeField]
+    protected Transform[] wayPoints;
 
     public PatrollingEnemyState patrollingEnemyState;
     public ChasingEnemyState chasingEnemyState;
     public AttackingEnemyState attackingEnemyState;
+
+
+    public Transform[] GetWayPoints()
+    {
+        return wayPoints;
+    }
+
 
 
     protected virtual void Start()
@@ -42,6 +51,7 @@ public class ActorBase : MonoBehaviour
         _mEnemySM.CurrentState.Update();
         _mEnemySM.CurrentState.LogicUpdate();
     }
+
 
    
 
